@@ -21,14 +21,11 @@ jobs:
       - name: Install project dependencies
         run: npm install
 
-      - name: Download CycloneDX Node CLI
-        run: |
-          curl -sL https://github.com/CycloneDX/cyclonedx-node/releases/latest/download/cyclonedx-node-linux-x64 -o cyclonedx-node
-          chmod +x cyclonedx-node
-          sudo mv cyclonedx-node /usr/local/bin/cyclonedx-node
+      - name: Install CycloneDX Node CLI via npm
+        run: npm install -g @cyclonedx/cyclonedx-node
 
       - name: Generate SBOM in JSON
-        run: cyclonedx-node --output sbom.json --format json
+        run: cyclonedx-node -o sbom.json -f json
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
