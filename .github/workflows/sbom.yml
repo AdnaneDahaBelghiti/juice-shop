@@ -18,14 +18,14 @@ jobs:
         with:
           node-version: '20.18.0'
 
-      - name: Install latest CycloneDX tool from GitHub
-        run: npm install --save-dev https://github.com/CycloneDX/cyclonedx-node-module
+      - name: Install latest CycloneDX NPM tool from GitHub
+        run: npm install --save-dev cyclonedx/cyclonedx-node-module
 
       - name: Install project dependencies
         run: npm install
 
       - name: Generate SBOM in JSON format
-        run: npx cyclonedx-bom --output-format json --output-file sbom.json
+        run: ./node_modules/.bin/cyclonedx-bom --output-format json --output-file sbom.json
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
