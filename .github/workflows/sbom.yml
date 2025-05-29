@@ -1,4 +1,4 @@
-name: Generate SBOM
+name: Generate SBOM 
 
 on:
   workflow_dispatch:
@@ -13,17 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.18.0'
+
       - name: Install project dependencies
         run: npm install
 
-      - name: Download CycloneDX CLI
+      - name: Download CycloneDX Node CLI
         run: |
-          curl -sL https://github.com/CycloneDX/cyclonedx-cli/releases/latest/download/cyclonedx-linux-x64 -o cyclonedx
-          chmod +x cyclonedx
-          sudo mv cyclonedx /usr/local/bin/cyclonedx
+          curl -sL https://github.com/CycloneDX/cyclonedx-node/releases/latest/download/cyclonedx-node-linux-x64 -o cyclonedx-node
+          chmod +x cyclonedx-node
+          sudo mv cyclonedx-node /usr/local/bin/cyclonedx-node
 
-      - name: Generate SBOM (JSON)
-        run: cyclonedx npm -o sbom.json -j
+      - name: Generate SBOM in JSON
+        run: cyclonedx-node --output sbom.json --format json
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
