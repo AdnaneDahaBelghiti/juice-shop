@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install CycloneDX CLI
-        run: npm install -g @cyclonedx/bom
+      - name: Install CycloneDX CLI (compatible versie)
+        run: npm install -g @cyclonedx/bom@1.7.0
 
       - name: Install project dependencies
         run: npm install
