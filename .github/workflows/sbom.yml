@@ -1,4 +1,4 @@
-name: Generate SBOM 
+name: Generate CycloneDX SBOM (JSON)
 
 on:
   workflow_dispatch:
@@ -18,14 +18,14 @@ jobs:
         with:
           node-version: '20.18.0'
 
+      - name: Install CycloneDX NPM CLI
+        run: npm install --save-dev @cyclonedx/cyclonedx-npm
+
       - name: Install project dependencies
         run: npm install
 
-      - name: Install CycloneDX Node CLI via npm
-        run: npm install -g @cyclonedx/cyclonedx-node
-
-      - name: Generate SBOM in JSON
-        run: cyclonedx-node -o sbom.json -f json
+      - name: Generate SBOM (JSON format)
+        run: npx @cyclonedx/cyclonedx-npm --of JSON -o sbom.json
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
