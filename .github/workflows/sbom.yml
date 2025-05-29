@@ -18,17 +18,17 @@ jobs:
         with:
           node-version: '20.18.0'
 
-      - name: Install CycloneDX locally
-        run: npm install --save-dev @cyclonedx/bom
+      - name: Install CycloneDX (oude CLI)
+        run: npm install --save-dev @cyclonedx/bom@0.0.9
 
       - name: Install project dependencies
         run: npm install
 
-      - name: Generate SBOM using npx
-        run: npx cyclonedx-bom --output-format json --output-file sbom.json
+      - name: Generate SBOM
+        run: npx cyclonedx-bom -o sbom.xml
 
-      - name: Upload SBOM as artifact
+      - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
         with:
           name: sbom
-          path: sbom.json
+          path: sbom.xml
